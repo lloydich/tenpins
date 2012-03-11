@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 class PlayerTest extends FunSuite {
   test("score result should have matched expected") {
-    val player = new Player()
+    val player = new Player("test name")
     def printStuff {
       println(player.score())
       println(player.ballScores)
@@ -25,5 +25,9 @@ class PlayerTest extends FunSuite {
     player.add(4)
     printStuff
     assert(player.score == 12)
+    
+    player.add(10)
+    printStuff
+    assert(player.score == 22)
   }
 }

@@ -1,7 +1,7 @@
 package org.tenpin
 object Frame {
   def getCurrentScore(balls:List[Int])= {
-    if (!balls.isEmpty)  balls(0) + balls(1) else 0
+    if (!balls.isEmpty)  balls.reduceLeft[Int](_+_) else 0
   }
 
   def isAStrike(balls:List[Int]) = {
