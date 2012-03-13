@@ -42,4 +42,7 @@ class Player(val name:String) extends Logging {
     if (frameFinished) frameScores = frameScores ::: List(Frame.getCurrentScore(ballScores.last))
     frameFinished
   }
+
+
+
 }
