@@ -2,11 +2,13 @@ package org.tenpin
 
 import grizzled.slf4j.Logging
 
-object TenPinConsole extends Logging{
-
-
-
+object TenPinConsole {
   def main(args: Array[String]):Unit = {
+     new TenPinConsole().game()
+  }
+}
+private class TenPinConsole extends Logging{
+  def game() {
     info("Starting")
 
      val players: List[Player] = createPlayers(getNumberOfPlayers)
