@@ -5,9 +5,6 @@ object Frame {
     if (!balls.isEmpty)  balls.reduceLeft[Int](_+_) else 0
   }
 
-//  def isAStrike(balls:List[Int]) = {
-//    balls(0) == 10
-//  }
   def isASpare(balls:List[Int]) = {
     getCurrentScore(balls) == 10
   }

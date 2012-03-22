@@ -11,14 +11,6 @@ class Player(val name:String) extends Logging {
   //TODO convert to seq for referring to references with interfaces
 
   def score(): Int = {
-//    def getIntValue(score: Option[Int]): Int = {
-//      score match {
-//        case None => 0
-//        case Some(value) =>  value
-//      }
-//    }
-    //if (frameScores.isEmpty) 0 else frameScores.reduceLeft((a: Int, b: Option[Int]) => a + b.getOrElse (0))
-   // if (frameScores.isEmpty) 0 else frameScores.flatMap(x => x).reduceLeft(_ + _)
    if (frameScores.isEmpty || frameScores.flatten.isEmpty) 0 else  frameScores.flatten.reduceLeft((a: Int, b: Int) => a + b)
   }
 

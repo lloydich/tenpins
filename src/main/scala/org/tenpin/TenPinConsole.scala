@@ -8,6 +8,11 @@ object TenPinConsole {
   }
 }
 private class TenPinConsole extends Logging{
+
+  def printWinners(game:Game) {
+    println("and the winner is ..... "+game.winner())
+  }
+
   def game() {
     info("Starting")
 
@@ -17,7 +22,8 @@ private class TenPinConsole extends Logging{
     playGame(game)
 
 
-//         printWinners();
+    printWinners(game);
+
 //         printTeamScore();
     info("finished")
   }

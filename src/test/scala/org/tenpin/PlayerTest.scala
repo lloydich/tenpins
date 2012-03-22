@@ -54,4 +54,6 @@ class PlayerTest extends FunSuite {
     printStuff
     assert(player.score == 56)
   }
+
+
 }
