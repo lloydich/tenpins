@@ -24,11 +24,11 @@ class Game(val players:List[Player])   extends Logging {
    // playerFrames:::List[Frame](frame)
  // }
 
-//  def getScore():Int={
-//  var total = 0
-//  playerFrames.foreach(s=>total=total+s.getCurrentScore)
-//    return  total
-//  }
+  def score(playerId:Int):Int={
+     info("\n Player Score...")
+     players(playerId).score()
+
+  }
 
 
 }

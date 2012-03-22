@@ -43,14 +43,15 @@ class Player(val name:String) extends Logging {
       if (ballscores.reduceLeft[Int](_+_) >10 ) throw new IllegalArgumentException("Score more than 10")
     }
     def getScoresFutureFrames(frameNumber:Int): Option[Int]={
-      if (ballScores.size > frameNumber) {
+      info("ballScores.size:"+ballScores.size+", frameNumber:"+frameNumber+1)
+      if (ballScores.size > frameNumber+1) {
         val currentFrame: List[Int] = ballScores(frameNumber)
         val nextFrame: List[Int] = ballScores(frameNumber + 1)
         if (Frame.isAStrike(currentFrame)) {
           if (nextFrame.size == 2) Some(Frame.getCurrentScore(nextFrame))
           else if (nextFrame.size == 1 && ((ballScores.size-frameNumber)>1)) {
-            val nextnextFrame: List[Int] = ballScores(frameNumber + 2)
-            Some(nextFrame(0)+(nextnextFrame(0)))
+            val nextNextFrame: List[Int] = ballScores(frameNumber + 2)
+            Some(nextFrame(0)+(nextNextFrame(0)))
           }
           else None
         }
@@ -82,14 +83,14 @@ class Player(val name:String) extends Logging {
       else  None
     }
     def createFrameScores() ={
-      for (frameNo <- ballScores.size-1 to 0) yield createFrameScore(frameNo)
+      for (frameNo <- ballScores.size-1 to 0 by -1) yield createFrameScore(frameNo)
     }
 
     info("\nadding " + ballScore)
     ballScores = createNewBallScores
     val frameFinished:Boolean = !Frame.isInPlay(ballScores.last)
     if (frameFinished)  {
-    frameScores = createFrameScores.toList
+    frameScores = createFrameScores.toList.reverse
     }
     frameFinished
   }

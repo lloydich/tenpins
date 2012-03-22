@@ -36,6 +36,22 @@ class PlayerTest extends FunSuite {
 
     player.add(4)
     printStuff
-    assert(player.score == 30)
+    assert(player.score == 40)
+
+    player.add(4)
+    printStuff
+    assert(player.score == 40)
+
+    player.add(6)
+    printStuff
+    assert(player.score == 40)
+
+    player.add(2)
+    printStuff
+    assert(player.score == 40)
+
+    player.add(2)
+    printStuff
+    assert(player.score == 56)
   }
 }
