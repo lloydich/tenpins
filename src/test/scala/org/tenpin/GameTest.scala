@@ -16,15 +16,15 @@ class GameTest extends FunSuite {
     val playerTwo = new Player("Player 2")
     val playerThree = new Player("Player 3")
 
-    var game: Game = new Game(List(playerOne, playerTwo, playerThree));
-    game.add(0, 5)
-    game.add(0, 1)
+    var game: Game = new Game(List(List(playerOne, playerTwo, playerThree)));
+    game.add(0, 0, 5)
+    game.add(0, 0, 1)
 
-    game.add(1, 7)
-    game.add(1, 2)
+    game.add(0, 1, 7)
+    game.add(0, 1, 2)
 
-    game.add(2, 2)
-    game.add(2, 1)
+    game.add(0, 2, 2)
+    game.add(0, 2, 1)
 
     printStuff(List(playerOne, playerTwo, playerThree))
 
@@ -36,15 +36,15 @@ class GameTest extends FunSuite {
     val playerTwo = new Player("Player 2")
     val playerThree = new Player("Player 3")
 
-    var game: Game = new Game(List(playerOne, playerTwo, playerThree));
-    game.add(0, 5)
-    game.add(0, 4)
+    var game: Game = new Game(List(List(playerOne),List(playerTwo, playerThree)));
+    game.add(0,0, 5)
+    game.add(0,0, 4)
 
-    game.add(1, 7)
-    game.add(1, 2)
+    game.add(1, 0, 7)
+    game.add(1, 0, 2)
 
-    game.add(2, 2)
-    game.add(2, 1)
+    game.add(1, 1, 2)
+    game.add(1, 1, 1)
 
     printStuff(List(playerOne, playerTwo, playerThree))
 

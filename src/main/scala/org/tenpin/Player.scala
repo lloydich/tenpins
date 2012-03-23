@@ -60,7 +60,7 @@ class Player(val name:String) extends Logging {
         None
       }
     }
-    def createFrameScore(frameNumber:Int): Option[Int] = { //for each frame working backwards score and check future frame(S) if scored 10
+    def createFrameScore(frameNumber:Int): Option[Int] = {
       val frameBallScores:List[Int] = ballScores(frameNumber)
       val awaitingScoreFromFutureFrame: Boolean = Frame.scoredTen(frameBallScores)
       val frameFinished:Boolean = !Frame.isInPlay(frameBallScores)

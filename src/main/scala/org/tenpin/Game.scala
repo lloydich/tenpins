@@ -3,15 +3,17 @@ package org.tenpin
 import org.tenpin.Frame
 import grizzled.slf4j.Logging
 
-class Game(val players:List[Player]) extends Logging {
-   def winner():List[Player]={
-      val maxScore:Int = players.map(_.score).max
-      players.filter(player => player.score == maxScore)
+class Game(val teams:List[List[Player]]) extends Logging {
+  val numberOfPlayers:Int =  if(!teams.isEmpty) teams.flatten.size else 0
+
+  def winner():List[Player]={
+      val maxScore:Int =  teams.flatten.map(_.score).max
+      teams.flatten.filter(player => player.score == maxScore)
    }
 
-  def add(playerId:Int, ballScore:Int):Boolean= {
-    info("\nadding " + ballScore + " for player: "+playerId)
-    players(playerId).add(ballScore)
+  def add(teamId:Int, playerId:Int, ballScore:Int):Boolean= {
+    info("\nadding " + ballScore + " for player: "+playerId +" in team: "+teamId)
+    teams(teamId)(playerId).add(ballScore)
 
   }
 
@@ -24,8 +26,8 @@ class Game(val players:List[Player]) extends Logging {
    // playerFrames:::List[Frame](frame)
  // }
 
-  def score(playerId:Int):Int={
-     players(playerId).score()
+  def score(teamId:Int, playerId:Int):Int={
+     teams(teamId)(playerId).score()
   }
 }
 
