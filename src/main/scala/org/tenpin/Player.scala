@@ -39,7 +39,7 @@ class Player(val name:String) extends Logging {
       if (ballScores.size > frameNumber+1) {
         val currentFrame: List[Int] = ballScores(frameNumber)
         val nextFrame: List[Int] = ballScores(frameNumber + 1)
-        if (Frame.isAStrike(currentFrame)) {
+        if (Frame.isAStrike(currentFrame))  {
           if (nextFrame.size == 2) Some(Frame.getCurrentScore(nextFrame))
           else if (nextFrame.size == 1 && ((ballScores.size-frameNumber)>1)) {
             val nextNextFrame: List[Int] = ballScores(frameNumber + 2)
@@ -82,7 +82,7 @@ class Player(val name:String) extends Logging {
     ballScores = createNewBallScores
     val frameFinished:Boolean = !Frame.isInPlay(ballScores.last)
     if (frameFinished)  {
-    frameScores = createFrameScores.toList.reverse
+       frameScores = createFrameScores.toList.reverse
     }
     frameFinished
   }
