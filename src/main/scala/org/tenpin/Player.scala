@@ -29,59 +29,17 @@ class Player(val name:String) extends Logging {
           ballScores.dropRight(1) ::: List(ballScores.last ::: List(ballScore))
         }
     }
-    def checkMoreThanTen(ballscores: List[Int]) {
-      if (ballscores.reduceLeft[Int](_+_) >10 ) throw new IllegalArgumentException("Score more than 10")
+    def checkMoreThanTen(ballScores: List[Int]) {
+      if (ballScores.reduceLeft[Int](_+_) >10 ) throw new IllegalArgumentException("Score more than 10")
     }
-    def getScoresFutureFrames(frameNumber:Int): Option[Int]={
-      //TODO move this to case classes
-      info("ballScores.size:"+ballScores.size+", frameNumber:"+frameNumber+1)
-      if (ballScores.size > frameNumber+1) {
-        val currentFrame: List[Int] = ballScores(frameNumber)
-        val nextFrame: List[Int] = ballScores(frameNumber + 1)
-        if (Frame.isAStrike(currentFrame))  {
-          if (nextFrame.size == 2) Some(Frame.getCurrentScore(nextFrame))
-          else if (nextFrame.size == 1 && ((ballScores.size-frameNumber)>1)) {
-            val nextNextFrame: List[Int] = ballScores(frameNumber + 2)
-            Some(nextFrame(0)+(nextNextFrame(0)))
-          }
-          else None
-        }
-        else if (Frame.isASpare(currentFrame)) {
-          Some(nextFrame(0))
-        }
-        else {
-          error("getScoresFromFutureFrames() not a strike or a spare")
-          throw new Exception ("getScoresFromFutureFrames() not a strike or a spare");
-        }
-      }
-      else {
-        info("getScoresFromFutureFrames() no frames in the future")
-        None
-      }
-    }
-    def createFrameScore(frameNumber:Int): Option[Int] = {
-      val frameBallScores:List[Int] = ballScores(frameNumber)
-      val awaitingScoreFromFutureFrame: Boolean = Frame.scoredTen(frameBallScores)
-      val frameFinished:Boolean = !Frame.isInPlay(frameBallScores)
-      if (frameFinished)  {
-        if(awaitingScoreFromFutureFrame) {
-         val scoresFromFutureFrames: Option[Int]  = getScoresFutureFrames(frameNumber)
-          if  (scoresFromFutureFrames!=None)    Some(Frame.getCurrentScore(frameBallScores)+scoresFromFutureFrames.getOrElse(0))
-          else None
-        }
-        else Some(Frame.getCurrentScore(frameBallScores))
-      }
-      else  None
-    }
-    def createFrameScores() ={
-      for (frameNo <- ballScores.size-1 to 0 by -1) yield createFrameScore(frameNo)
-    }
+
+   
 
     info("\nadding " + ballScore)
     ballScores = createNewBallScores
     val frameFinished:Boolean = !Frame.isInPlay(ballScores.last)
     if (frameFinished)  {
-       frameScores = createFrameScores.toList.reverse
+       frameScores = Score.createFrameScores(ballScores).toList.reverse
     }
     frameFinished
   }
