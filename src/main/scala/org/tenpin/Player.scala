@@ -21,20 +21,19 @@ class Player(val name:String) extends Logging {
       if (ballScores.isEmpty) {
         ballScores ::: List(List(ballScore))
       }
-      else {
-        if (!Frame.isInPlay(ballScores.last)) {
+      else if (!Frame.isInPlay(ballScores.last)) {
           ballScores ::: List(List(ballScore))
-        }
-        else {
+      }
+      else {
           checkMoreThanTen(ballScores.last ::: List(ballScore))
           ballScores.dropRight(1) ::: List(ballScores.last ::: List(ballScore))
         }
-      }
     }
     def checkMoreThanTen(ballscores: List[Int]) {
       if (ballscores.reduceLeft[Int](_+_) >10 ) throw new IllegalArgumentException("Score more than 10")
     }
     def getScoresFutureFrames(frameNumber:Int): Option[Int]={
+      //TODO move this to case classes
       info("ballScores.size:"+ballScores.size+", frameNumber:"+frameNumber+1)
       if (ballScores.size > frameNumber+1) {
         val currentFrame: List[Int] = ballScores(frameNumber)
