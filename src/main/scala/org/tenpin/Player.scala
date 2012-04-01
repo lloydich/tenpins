@@ -16,34 +16,13 @@ class Player(val name:String) extends Logging {
 
 
   def add(ballScore: Int):Boolean = {
-    def createNewBallScores: List[List[Int]] = {
-      checkMoreThanTen(List(ballScore))
-      if (ballScores.isEmpty) {
-        ballScores ::: List(List(ballScore))
-      }
-      else if (!Frame.isInPlay(ballScores.last)) {
-          ballScores ::: List(List(ballScore))
-      }
-      else {
-          checkMoreThanTen(ballScores.last ::: List(ballScore))
-          ballScores.dropRight(1) ::: List(ballScores.last ::: List(ballScore))
-        }
-    }
-    def checkMoreThanTen(ballScores: List[Int]) {
-      if (ballScores.reduceLeft[Int](_+_) >10 ) throw new IllegalArgumentException("Score more than 10")
-    }
-
-   
-
     info("\nadding " + ballScore)
-    ballScores = createNewBallScores
+    ballScores = Score.createNewBallScores(ballScore, ballScores)
     val frameFinished:Boolean = !Frame.isInPlay(ballScores.last)
     if (frameFinished)  {
        frameScores = Score.createFrameScores(ballScores).toList.reverse
     }
     frameFinished
   }
-
-
 
 }

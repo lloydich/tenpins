@@ -4,7 +4,11 @@ import grizzled.slf4j.Logging
 
 object Score extends Logging {
 
-    private  def getScoresFutureFrames(frameNumber: Int, ballScores: List[List[Int]]): Option[Int] = {
+  def createFrameScores(ballScores: List[List[Int]]) = {
+    for (frameNo <- ballScores.size - 1 to 0 by -1) yield createFrameScore(frameNo, ballScores)
+  }
+
+  private def getScoresFutureFrames(frameNumber: Int, ballScores: List[List[Int]]): Option[Int] = {
     //TODO move this to case classes
     info("ballScores.size:" + ballScores.size + ", frameNumber:" + frameNumber + 1)
     if (ballScores.size > frameNumber + 1) {
@@ -47,8 +51,23 @@ object Score extends Logging {
     else None
   }
 
-  def createFrameScores(ballScores: List[List[Int]]) = {
-    for (frameNo <- ballScores.size - 1 to 0 by -1) yield createFrameScore(frameNo, ballScores)
+
+  def createNewBallScores(ballScore: Int, ballScores: List[List[Int]]): List[List[Int]] = {
+    checkMoreThanTen(List(ballScore))
+    if (ballScores.isEmpty) {
+      ballScores ::: List(List(ballScore))
+    }
+    else if (!Frame.isInPlay(ballScores.last)) {
+      ballScores ::: List(List(ballScore))
+    }
+    else {
+      checkMoreThanTen(ballScores.last ::: List(ballScore))
+      ballScores.dropRight(1) ::: List(ballScores.last ::: List(ballScore))
+    }
+  }
+
+  private def checkMoreThanTen(ballScores: List[Int]) {
+    if (ballScores.reduceLeft[Int](_ + _) > 10) throw new IllegalArgumentException("Score more than 10")
   }
 
 }
