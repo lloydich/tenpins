@@ -100,7 +100,6 @@ class PlayerTest extends FunSuite {
     player.add(10)
     assert(player.score == 60)
 
-
     player.add(10)
     assert(player.score == 90)
 
@@ -110,21 +109,17 @@ class PlayerTest extends FunSuite {
     player.add(10)
     assert(player.score == 150)
 
-
     player.add(10)
     assert(player.score == 180)
 
     player.add(10)
     assert(player.score == 210)
 
-
     player.add(10)
     assert(player.score == 210)
 
-
     player.add(10)
     assert(player.score == 210)
-
 
     player.add(10)
     assert(player.score == 300)
