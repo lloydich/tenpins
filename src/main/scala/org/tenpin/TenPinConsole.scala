@@ -15,6 +15,10 @@ private class TenPinConsole extends Logging{
   }
 
 
+  def printTeamScore(players: List[Player]){
+     println("Team score is..... "+ (players map (_.score)).sum)
+
+  }
 
 
   def game() {
@@ -28,7 +32,8 @@ private class TenPinConsole extends Logging{
 
       printWinners(game);
 
-  //         printTeamScore();
+      printTeamScore(players);
+
       info("finished")
     }
 

@@ -9,7 +9,7 @@ class Game(val players:List[Player]) extends Logging {
    }
 
   def add(playerId:Int, ballScore:Int):Boolean= {
-    info("\nadding " + ballScore + " for player: "+playerId)
+    debug("\nadd ballscore: " + ballScore + " for player: "+playerId)
     players(playerId).add(ballScore)
 
   }
