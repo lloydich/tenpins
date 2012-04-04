@@ -2,6 +2,7 @@ package org.tenpin
 
 import grizzled.slf4j.Logging
 import scala.Some._
+import org.tenpin.Score.Frame
 
 class Player(val name:String) extends Logging {
 
@@ -18,7 +19,8 @@ class Player(val name:String) extends Logging {
   def add(ballScore: Int):Boolean = {
     info("\nadding " + ballScore)
     ballScores = Score.createNewBallScores(ballScore, ballScores)
-    val frameFinished:Boolean = !Frame.isInPlay(ballScores.last)
+    info("\n frame no:"+ballScores.size)
+    val frameFinished:Boolean = !FrameScore.isInPlay(Frame(ballScores.size, ballScores.last))
     if (frameFinished)  {
        frameScores = Score.createFrameScores(ballScores).toList.reverse
     }

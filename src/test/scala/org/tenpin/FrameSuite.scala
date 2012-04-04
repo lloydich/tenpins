@@ -1,22 +1,44 @@
 import org.scalatest.Suite
-import org.tenpin.Frame
+import org.tenpin.FrameScore
+import org.tenpin.Score.Frame
 
 class FrameSuite extends Suite {
   def testFrameScoreGetScore() {
-    assert(Frame.getCurrentScore(List(4, 5)) === 9)
+    assert(FrameScore.getCurrentScore(List(4, 5)) === 9)
   }
 
   def testFrameScoreGetNoScore() {
-    assert(Frame.getCurrentScore(List()) === 0)
-//    expect(0) {
-//      Frame.getCurrentScore(List(0))
-//    }
+    assert(FrameScore.getCurrentScore(List()) === 0)
+    //    expect(0) {
+    //      Frame.getCurrentScore(List(0))
+    //    }
   }
+
   def testFrameScoreIsASpare() {
-    assert(Frame.isASpare(List(5,5))==true)
+    assert(FrameScore.isASpare(Frame(1, List(5, 5))) == true)
+  }
+
+  def testFrameScoreIsNotASpare() {
+    assert(FrameScore.isASpare(Frame(1, List(4, 5))) == false)
+  }
+
+  def testFrameScoreIsASpareForTenthFrame() {
+    assert(FrameScore.isASpare(Frame(10, List(6, 4))) == true)
+  }
+
+  def testFrameScoreIsNotASpareForTenthFrame() {
+    assert(FrameScore.isASpare(Frame(10, List(10, 6, 4))) == false)
   }
 
   def testFrameScoreIsAStrike() {
-    assert(Frame.isAStrike(List(10,0))==true)
+    assert(FrameScore.isAStrike(List(10, 0)) == true)
+  }
+
+  def testFrameScoreIsAlsoAStrike() {
+    assert(FrameScore.isAStrike(List(10)) == true)
+  }
+
+  def testFrameScoreIsNotAStrike() {
+    assert(FrameScore.isAStrike(List(3, 7)) == false)
   }
 }
