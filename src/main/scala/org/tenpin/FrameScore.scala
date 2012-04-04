@@ -1,5 +1,5 @@
 package org.tenpin
-object Frame {
+object FrameScore {
 
   def getCurrentScore(balls:List[Int])= {
     if (!balls.isEmpty)  balls.reduceLeft[Int](_+_) else 0
