@@ -2,13 +2,13 @@ package org.tenpin
 
 import grizzled.slf4j.Logging
 import scala.Some._
-
+import collection.immutable.LinearSeq
 
 
 class Player(val name:String) extends Logging with FrameScore {
 
-  var frameScores: List[Option[Int]] = List[Option[Int]]()
-  var ballScores: List[List[Int]] = List[List[Int]]()
+  var frameScores: LinearSeq[Option[Int]] = List[Option[Int]]()
+  var ballScores: LinearSeq[LinearSeq[Int]] = List[List[Int]]()
 
 
 
@@ -20,9 +20,9 @@ class Player(val name:String) extends Logging with FrameScore {
 
 
   def add(ballScore: Int):Boolean = {
-    info("\nadding " + ballScore)
+    debug("\nadding " + ballScore)
     ballScores = Score.createNewBallScores(ballScore, ballScores)
-    info("\n frame no:"+ballScores.size)
+    debug("\n frame no:"+ballScores.size)
     val frameFinished:Boolean = !isInPlay(Frame(ballScores.size, ballScores.last))
     if (frameFinished)  {
        frameScores = Score.createFrameScores(ballScores).toList.reverse

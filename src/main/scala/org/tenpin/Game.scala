@@ -1,9 +1,10 @@
 package org.tenpin
 
 import grizzled.slf4j.Logging
+import collection.immutable.LinearSeq
 
-class Game(val players:List[Player]) extends Logging {
-   def winner():List[Player]={
+class Game(val players:LinearSeq[Player]) extends Logging {
+   def winner():LinearSeq[Player]={
       val maxScore:Int = players.map(_.score).max
       players.filter(player => player.score == maxScore)
    }

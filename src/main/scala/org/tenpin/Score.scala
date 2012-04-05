@@ -2,17 +2,18 @@ package org.tenpin
 
 import grizzled.slf4j.Logging
 import org.tenpin.Frame
+import collection.immutable.LinearSeq
 
 object Score extends Logging with FrameScore{
 
 
 
-  def createFrameScores(ballScores: List[List[Int]]) = {
+  def createFrameScores(ballScores: LinearSeq[LinearSeq[Int]]) = {
     for (frameNo <- ballScores.size to 1 by -1) yield frameScore(frameNo, ballScores)
   }
 
-  private def frameScore(frameNumber: Int, ballScores: List[List[Int]]): Option[Int] = {
-    val frameBallScores: List[Int] = ballScores(frameNumber-1)
+  private def frameScore(frameNumber: Int, ballScores: LinearSeq[LinearSeq[Int]]): Option[Int] = {
+    val frameBallScores: LinearSeq[Int] = ballScores(frameNumber-1)
 
     val awaitingScoreFromFutureFrame: Boolean = awaitingScore(Frame(frameNumber,frameBallScores))
     val frameFinished: Boolean = !isInPlay(Frame(frameNumber,frameBallScores))
@@ -28,7 +29,7 @@ object Score extends Logging with FrameScore{
     else None
   }
 
-   private def getScoresFutureFrames(frameNumber: Int, ballScores: List[List[Int]]): Option[Int] = {
+   private def getScoresFutureFrames(frameNumber: Int, ballScores: LinearSeq[LinearSeq[Int]]): Option[Int] = {
     debug("getScoresFutureFrames() ballScores.size:" + ballScores.size + ", frameNumber:" + frameNumber)
     if (ballScores.size > frameNumber ) {
       val currentFrame:Frame = Frame(frameNumber, ballScores(frameNumber-1))
@@ -43,7 +44,7 @@ object Score extends Logging with FrameScore{
     }
   }
 
- private def calculateFutureScores(currentFrame:Frame, nextFrame:Frame, ballScores: List[List[Int]]):Option[Int] =
+ private def calculateFutureScores(currentFrame:Frame, nextFrame:Frame, ballScores: LinearSeq[LinearSeq[Int]]):Option[Int] =
 
    currentFrame match {
 
@@ -66,17 +67,17 @@ object Score extends Logging with FrameScore{
    }
 
 
-  def createNewBallScores(ballScore: Int, ballScores: List[List[Int]]): List[List[Int]] =  {
+  def createNewBallScores(ballScore: Int, ballScores: LinearSeq[LinearSeq[Int]]): LinearSeq[LinearSeq[Int]] =  {
     checkScore(10,List(ballScore))
     if (ballScores.isEmpty) {
-      ballScores ::: List(List(ballScore))
+      ballScores.toList ::: List(List(ballScore))
     }
     else if (!isInPlay(Frame(ballScores.size, ballScores.last))) {
-      ballScores ::: List(List(ballScore))
+      ballScores.toList ::: List(List(ballScore))
     }
     else {
-      checkScore(Frame(ballScores.size, (ballScores.last ::: List(ballScore))))
-      ballScores.dropRight(1) ::: List(ballScores.last ::: List(ballScore))
+      checkScore(Frame(ballScores.size, (ballScores.last.toList ::: List(ballScore))))
+      ballScores.dropRight(1).toList ::: List(ballScores.last.toList ::: List(ballScore))
     }
   }
 

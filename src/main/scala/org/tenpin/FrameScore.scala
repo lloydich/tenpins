@@ -1,11 +1,13 @@
 package org.tenpin
 
+import collection.immutable.LinearSeq
 
-case class Frame(frameNumber:Int, balls:List[Int])
+
+case class Frame(frameNumber:Int, balls:LinearSeq[Int])
 
 trait FrameScore {
 
-  def currentScore(balls:List[Int])= {
+  def currentScore(balls:LinearSeq[Int])= {
     if (!balls.isEmpty)  balls.reduceLeft[Int](_+_) else 0
   }
 
@@ -21,13 +23,13 @@ trait FrameScore {
   }
 
 
-  def isAStrike(balls:List[Int]):Boolean =
+  def isAStrike(balls:LinearSeq[Int]):Boolean =
     balls match {
      case List(10, _*) => true
      case _ => false
     }
 
-  def scoredTen(balls: List[Int]):Boolean =
+  def scoredTen(balls: LinearSeq[Int]):Boolean =
     balls match {
    case List(10, _*) => true
    case List(a, b) if(a+b==10) => true
@@ -45,7 +47,7 @@ trait FrameScore {
     case Frame(_, _) => checkScore(10, frame.balls)
   }
 
-  def checkScore(max:Int, balls:List[Int]) {
+  def checkScore(max:Int, balls:LinearSeq[Int]) {
     if (balls.reduceLeft[Int](_ + _) > max) throw new IllegalArgumentException("Score more than " + max)
   }
 }
