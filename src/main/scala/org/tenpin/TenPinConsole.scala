@@ -2,6 +2,7 @@ package org.tenpin
 
 import grizzled.slf4j.Logging
 import collection.immutable.LinearSeq
+import org.tenpin.Player
 
 object TenPinConsole {
   def main(args: Array[String]):Unit = {
@@ -18,9 +19,12 @@ private class TenPinConsole extends Logging{
 
   def printTeamScore(players: LinearSeq[Player]){
      println("Team score is..... "+ (players map (_.score)).sum)
-
   }
 
+
+  def printScores( game:Game) {
+       println(game.scoreBoard)
+  }
 
   def game() {
       val players: LinearSeq[Player] = createPlayers(getNumberOfPlayers)
@@ -29,6 +33,7 @@ private class TenPinConsole extends Logging{
       playGame(game)
 
       printWinners(game);
+      printScores(game)
       printTeamScore(players);
     }
 

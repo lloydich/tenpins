@@ -18,4 +18,8 @@ class Game(val players:LinearSeq[Player]) extends Logging {
   def score(playerId:Int):Int={
      players(playerId).score()
   }
+
+  def scoreBoard ={
+    for(player <- players) yield new ScoreBoard().getScoreBoard(player)
+  }
 }
