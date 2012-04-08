@@ -46,7 +46,7 @@ class ScoreBoardTest extends FunSuite {
   test("score board result should have matched expected where all ballscores same") {
     var player: Player = new Player(PLAYER_1_NAME);
     for (i <- 1 to 20) player.add(1)
-    val result: String = new ScoreBoard().getScoreBoard(player)
+    val result: String = ScoreBoard.getScoreBoard(player)
     println(result)
     assert(expectedScoreBoard_player1 == result, true)
   }
@@ -55,7 +55,7 @@ class ScoreBoardTest extends FunSuite {
     var player: Player = new Player(PLAYER_2_NAME);
     val scores: LinearSeq[Int] = List(1, 3, 5, 5, 10, 5, 4, 2, 1, 6, 4, 10, 2, 4, 5, 1, 8, 1)
     scores.foreach(score => player.add(score))
-    val result: String = new ScoreBoard().getScoreBoard(player)
+    val result: String = ScoreBoard.getScoreBoard(player)
     println(result)
     assert(expectedScoreBoard_player2 == result, true)
   }
@@ -64,7 +64,7 @@ class ScoreBoardTest extends FunSuite {
     var player: Player = new Player(PLAYER_3_NAME);
     val scores: LinearSeq[Int] = List(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)
     scores.foreach(score => player.add(score))
-    val result: String = new ScoreBoard().getScoreBoard(player)
+    val result: String = ScoreBoard.getScoreBoard(player)
     println(result)
     assert(expectedScoreBoard_player3 == result, true)
   }

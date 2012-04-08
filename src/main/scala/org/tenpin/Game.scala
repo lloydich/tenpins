@@ -20,6 +20,6 @@ class Game(val players:LinearSeq[Player]) extends Logging {
   }
 
   def scoreBoard ={
-    for(player <- players) yield new ScoreBoard().getScoreBoard(player)
+    for(player <- players) yield ScoreBoard.getScoreBoard(player)
   }
 }

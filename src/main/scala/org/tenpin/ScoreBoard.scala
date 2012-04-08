@@ -3,9 +3,38 @@ package org.tenpin
 import collection.immutable.LinearSeq
 
 
-class ScoreBoard extends FrameScore {
-  var gameScore: Int = 0
+object ScoreBoard extends FrameScore {
   def getScoreBoard(player: Player): String = {
+    var totalScore: Int = 0
+
+    def ballScore(player: Player, frameNumber: Int, ballNumber: Int): String = {
+
+      val frameBalls: LinearSeq[Int] = player.ballScores(frameNumber)
+      val ballScore: Int = ballNumber match {
+        case 1 => if (frameBalls.size > 0) frameBalls(0) else 0
+        case 2 => if (frameBalls.size > 1) frameBalls(1) else 0
+      }
+      formatBallScore(frameNumber, ballNumber, ballScore, frameBalls)
+    }
+
+    def formatBallScore(frameNumber: Int, ballNumber: Int, ballScore: Int, frameBalls: LinearSeq[Int]): String = {
+      val score: String = ballNumber match {
+        case 1 => ballScore.toString
+        case 2 if (isAStrike(frameBalls)) => "X"
+        case 2 if (isASpare(Frame(frameNumber, frameBalls))) => "/"
+        case _ => ballScore.toString
+
+      }
+      String.format("%2s", score)
+    }
+
+    def gameScore(frameNumber: Int, player: Player): String = {
+      val frameScore: Option[Int] = player.frameScores(frameNumber)
+      val score: Int = frameScore.getOrElse(0)
+      totalScore += score
+      String.format("%3s", totalScore.toString)
+    }
+
     var scoreBoard: StringBuilder = new StringBuilder
     scoreBoard.append("\nPLAYER " + player.name)
     scoreBoard.append("\n___________ ___________ ___________ ___________ ___________ ___________ ___________ ___________ ___________ ___________")
@@ -18,31 +47,5 @@ class ScoreBoard extends FrameScore {
     return scoreBoard.toString
   }
 
-  private def ballScore(player: Player, frameNumber: Int, ballNumber: Int): String = {
 
-    val frameBalls: LinearSeq[Int] = player.ballScores(frameNumber)
-    val ballScore: Int = ballNumber match {
-      case 1 => if (frameBalls.size>0) frameBalls(0) else 0
-      case 2 => if (frameBalls.size>1) frameBalls(1) else 0
-    }
-    formatBallScore(frameNumber, ballNumber, ballScore, frameBalls)
-  }
-
-  private def formatBallScore(frameNumber: Int, ballNumber: Int, ballScore: Int, frameBalls: LinearSeq[Int]): String = {
-    val score: String = ballNumber match {
-      case 1 => ballScore.toString
-      case 2 if (isAStrike(frameBalls)) => "X"
-      case 2 if (isASpare(Frame(frameNumber, frameBalls))) => "/"
-      case _ => ballScore.toString
-
-    }
-    String.format("%2s", score)
-  }
-
-  private def gameScore(frameNumber: Int, player: Player): String = {
-    val frameScore: Option[Int] = player.frameScores(frameNumber)
-    val score: Int = frameScore.getOrElse(0)
-    gameScore += score
-    String.format("%3s", gameScore.toString)
-  }
 }
