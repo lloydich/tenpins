@@ -11,8 +11,8 @@ object ScoreBoard extends FrameScore {
 
       val frameBalls: LinearSeq[Int] = player.ballScores(frameNumber)
       val ballScore: Int = ballNumber match {
-        case 1 => if (frameBalls.size > 0) frameBalls(0) else 0     //TODO fix shouldn't need else
-        case 2 => if (frameBalls.size > 1) frameBalls(1) else 0
+        case 1 => frameBalls.head
+        case 2 => if(frameBalls.isDefinedAt(1))  frameBalls(1)  else 0
       }
       formatBallScore(frameNumber, ballNumber, ballScore, frameBalls)
     }
