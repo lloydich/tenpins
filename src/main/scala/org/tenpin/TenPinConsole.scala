@@ -23,7 +23,7 @@ private class TenPinConsole extends Logging{
 
 
   def printScores( game:Game) {
-       println(game.scoreBoard)
+      game.scoreBoard.foreach(scoreBoard => println(scoreBoard))
   }
 
   def game() {
