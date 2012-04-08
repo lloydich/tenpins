@@ -19,7 +19,7 @@ object Score extends Logging with FrameScore{
     val frameFinished: Boolean = !isInPlay(Frame(frameNumber,frameBallScores))
 
     if (frameFinished) {
-      if (awaitingScoreFromFutureFrame) {
+      if (awaitingScoreFromFutureFrame) {    //TDO fix all these ifs
         val scoresFromFutureFrames: Option[Int] = getScoresFutureFrames(frameNumber, ballScores)
         if (scoresFromFutureFrames != None) Some(currentScore(frameBallScores) + scoresFromFutureFrames.getOrElse(0))
         else None

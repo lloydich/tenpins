@@ -11,7 +11,7 @@ object ScoreBoard extends FrameScore {
 
       val frameBalls: LinearSeq[Int] = player.ballScores(frameNumber)
       val ballScore: Int = ballNumber match {
-        case 1 => if (frameBalls.size > 0) frameBalls(0) else 0
+        case 1 => if (frameBalls.size > 0) frameBalls(0) else 0     //TODO fix shouldn't need else
         case 2 => if (frameBalls.size > 1) frameBalls(1) else 0
       }
       formatBallScore(frameNumber, ballNumber, ballScore, frameBalls)
@@ -44,7 +44,7 @@ object ScoreBoard extends FrameScore {
     scoreBoard.append("\n|         | |         | |         | |         | |         | |         | |         | |         | |         | |         |")
     scoreBoard.append("\n|   " + gameScore(0, player) + "   | |   " + gameScore(1, player) + "   | |   " + gameScore(2, player) + "   | |   " + gameScore(3, player) + "   | |   " + gameScore(4, player) + "   | |   " + gameScore(5, player) + "   | |   " + gameScore(6, player) + "   | |   " + gameScore(7, player) + "   | |   " + gameScore(8, player) + "   | |   " + gameScore(9, player) + "   |")
     scoreBoard.append("\n|_________| |_________| |_________| |_________| |_________| |_________| |_________| |_________| |_________| |_________|\n\n")
-    return scoreBoard.toString
+    scoreBoard.toString
   }
 
 
